@@ -1,0 +1,40 @@
+.header{
+	background-color:red;
+	height:5%;
+}
+.header img{
+	width:10%;
+}
+#txt{
+	width:78%;
+}
+#btn{
+	width:10%;
+}
+#rel{
+	height:90%;
+	background-color:yellow;
+}
+.card{
+	display:inline-block;
+	height:45%;
+	width:19%;
+	background-color:blue;
+	margin:3px;
+}
+#rel p{
+	height:15%;
+	text-align:center;
+}
+.nmb{
+	background-color:green;
+	color:black;
+}
+.ccn{
+	background-color:purple;
+	color:black;
+}
+.lrs{
+	height:60%;
+	width:100%;
+}
