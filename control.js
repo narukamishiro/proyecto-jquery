@@ -13,10 +13,14 @@ function addcard(x,dat){
 function search(){
 	$('#rel div').remove;
 	var nm=$('#txt').text();
+	var rel;
+	var dt;
+	if(nm==""){
+	}else{
 	nm.replace(" ","%20");
-	var rel=$.ajax({url:"https://api.hillbillysoftware.com/Music/Lyrics/ByName/14e7662a0b8e44ce914bc97ca4c7923a/"+nm,error: function(xhr){alert("error "+xhr.status)}});
-	var dt=rdat(rel);
-	
+	rel=$.ajax({url:"https://api.hillbillysoftware.com/Music/Lyrics/ByName/14e7662a0b8e44ce914bc97ca4c7923a/"+nm,error: function(xhr){alert("error "+xhr.status)}});
+	dt=rdat(rel);
+	};
 }
 function rdat(rel){
 	var dat=[];
