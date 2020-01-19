@@ -1,52 +1,50 @@
-//key=14e7662a0b8e44ce914bc97ca4c7923a
-$(document).ready(init);
-function init(){
-	$('#btn').click=search();
+//http://www.omdbapi.com/?apikey=1f5301b5&t="+ (api key: 1f5301b5);
+function search(ttl,pg){
+	$(document html).css("overflow","hidden");
+	var msn="http://www.omdbapi.com/?apikey=1f5301b5&s="+ttl+"&page="+pg;
+		$.ajax({url: msn, success: function(result){
+			mkCardMain(result);
+			},error:function(){alert("no se ha podido encontrar lo que buscas")}	
+		});
 }
-function addcard(x,dat){
-	var id="crd"+x;
-	$('#rel').append('<div id="'+id+'"></div>');
-	$('#'+id).append('<p class="nmb">'+dat[x][0]+'</p>');
-	$('#'+id).append('<p class="ccn">'+dat[x][1]+'</p>');
-	$('#'+id).append('<textarea class="lrs">'+dat[x][2]+'</textarea>');
+function searchDetails(id){
+	$(document html).css("overflow","hidden");
+	var msn="http://www.omdbapi.com/?apikey=1f5301b5&i="+id;
+		$.ajax({url: msn, success: function(result){
+			$("#resul").text(result.Title);
+			alert("se ha encontrado  datos por id");
+			},error:function(){alert("no se ha podido encontrar lo que buscas")}	
+		});
 }
-function search(){
-	$('#rel div').remove;
-	var nm=$('#txt').text();
-	var rel;
-	var dt;
-	if(nm==""){
-	}else{
-	nm.replace(" ","%20");
-	rel=$.ajax({url:"https://api.hillbillysoftware.com/Music/Lyrics/ByName/14e7662a0b8e44ce914bc97ca4c7923a/"+nm,error: function(xhr){alert("error "+xhr.status)}});
-	dt=rdat(rel);
-	};
-}
-function rdat(rel){
-	var dat=[];
-	for(y=0;y<=rel.length;y++){
-		dat.push(rel["Artist"]);
-		dat.push(rel["Song"]);
-		dat.push(rel["Lyrics"]);
+function getu(){
+	var t=$("#titulo").val();
+	search(t);
+	if(t.length<2){
+		$("#titulo").css("backgroundColor","red");
 	}
-	return dat;
-}
-function infscroll(dat){
-	var x;
-	
-	$(document).scroll(function(){
-		var distanceFromBottom = Math.floor($(document).height() - $(document).scrollTop() - $(window).height());
-		if(distanceFromBottom < 10000) {
-			x++;
-			add10(dat,x);
-		}
-	});
-}
-
-function add10(dat,x){
-	var max=min+9;
-	var min=(x*10)-1;
-	for(y=min;y<=max;y++){
-		addcard(y,dat);
+	else{
+		$("#titulo").css("backgroundColor","white");
+		t=t.replace(" ", "+");
+		pg=1;
+		search(t,pg);
 	}
 }
+function mkCardMain(res){
+	let card=$( "<div/>", {"mvid": res.imdbID});
+	$("<img/>",{"src":res.Poster}).appendTo(card);
+	$("<p/>",{"value":res.Title}).appendTo(card);
+	card.appendTo("#resul");
+	//card.click(searchDetails(this.attr("mvid"));
+}
+function endScroll(){
+	let limit=100;
+	let pos=$(window).scrollTop();
+	let end=$(window).innerHeight;
+	if(pos>(end-limit)){
+		pg++;
+		search(t,pg);	
+	}
+	$(document html).css("overflow","scroll");
+}
+$( window ).scroll(endScroll);
+$("#btn").click(getu);
